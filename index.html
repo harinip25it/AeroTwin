@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AeroTwin | UAV Engine Health Monitoring</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <div class="brand-mark" aria-hidden="true">✈</div>
+      <div class="brand-title">AeroTwin - UAV Engine Health Monitoring</div>
+      <div class="live-clock"><span class="live-dot"></span><span id="liveLabel">Live Data</span><span class="clock-divider">|</span><time id="clock">--:--:--</time></div>
+    </header>
+
+    <section class="dashboard-grid">
+      <div class="left-column">
+        <section class="panel twin-panel">
+          <h2>Virtual Engine (Digital Twin)</h2>
+          <div class="twin-content">
+            <div class="engine-visual"><img
+  src="https://static.wixstatic.com/media/58bb90_637791131f37480f9cf186eef451cc73~mv2.png/v1/fill/w_566%2Ch_388%2Cal_c%2Clg_1%2Cq_85%2Cenc_auto/58bb90_637791131f37480f9cf186eef451cc73~mv2.png"
+  alt="Aircraft piston engine"
+  style="width:100%; height:330px; object-fit:contain;"
+><div class="engine-chip"><span class="pulse"></span><span id="twinMode">SIMULATION ACTIVE</span></div></div>
+            <div class="live-parameters">
+              <h3>Engine Parameters (Live)</h3>
+              <div class="parameter-card"><span>RPM</span><strong id="rpmValue">2350</strong><small>rpm</small></div>
+              <div class="parameter-card"><span>CHT</span><strong id="chtValue">188</strong><small>°C</small></div>
+              <div class="parameter-card"><span>EGT</span><strong id="egtValue">620</strong><small>°C</small></div>
+              <div class="parameter-card"><span>Pressure</span><strong id="pressureValue">38</strong><small>psi</small></div>
+              <div class="parameter-card"><span>Temperature</span><strong id="tempValue">72</strong><small>°C</small></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel status-panel">
+          <div class="panel-heading-row"><h2>Parameter Status</h2><span class="small-caption">Updated automatically</span></div>
+          <div class="table-wrap"><table><thead><tr><th>Parameter</th><th>Live Value</th><th>Reference Range</th><th>Status</th><th>Reason</th></tr></thead><tbody id="statusRows"></tbody></table></div>
+        </section>
+      </div>
+
+      <div class="right-column">
+        <section class="panel reference-panel">
+          <h2>Fixed Reference Values</h2>
+          <div class="table-wrap"><table><thead><tr><th>Parameter</th><th>Min</th><th>Max</th><th>Unit</th></tr></thead><tbody>
+            <tr><td>RPM</td><td>2000</td><td>2600</td><td>rpm</td></tr><tr><td>CHT</td><td>100</td><td>200</td><td>°C</td></tr><tr><td>EGT</td><td>500</td><td>700</td><td>°C</td></tr><tr><td>Pressure</td><td>25</td><td>45</td><td>psi</td></tr><tr><td>Temperature</td><td>60</td><td>90</td><td>°C</td></tr>
+          </tbody></table></div>
+        </section>
+
+        <section class="panel calculations-panel">
+          <h2>Calculations</h2>
+          <div class="calculation-grid">
+            <article class="calc-card health-card"><h3>Health Index (HI)</h3><p class="formula">Formula: <i>HI = Σ wᵢSᵢ</i></p><div class="health-box"><div class="health-box-head">HI Value</div><div class="health-score-line"><strong id="healthValue">92 / 100</strong><span id="healthBadge" class="good-badge">Good</span></div><div class="meter"><span id="healthMeter"></span></div></div><p class="footnote">Calculated from live parameter scores and weights.</p></article>
+            <article class="calc-card power-card"><h3>Engine Power</h3><p class="formula">Formula: <i>P = 2πNT / 60</i></p><div class="power-inputs"><div><span>RPM (N)</span><strong id="powerRpm">2350 rpm</strong></div><div><span>Torque (T)</span><strong><input id="torqueInput" type="number" min="10" max="250" value="120" aria-label="Torque in newton metres"> Nm</strong></div></div><div class="power-output"><span>Power</span><strong id="powerValue">29.53 kW</strong></div></article>
+          </div>
+          <article class="overall-card" id="overallCard"><div class="status-icon" id="overallIcon">✓</div><div><h3>Overall Engine Status</h3><strong id="overallStatus">NORMAL</strong><p id="overallReason">All parameters are within the reference range.</p><p id="overallHint">Engine is operating as expected.</p></div></article>
+        </section>
+
+        <section class="panel controls-panel"><div class="panel-heading-row"><h2>Simulation Controls</h2><span class="small-caption">Synthetic demo data</span></div><div class="control-row"><label for="modeSelect">Test mode</label><select id="modeSelect"><option value="normal">Normal operation</option><option value="overheat">Overheating test</option><option value="vibration">High-vibration test</option><option value="lowpressure">Low oil-pressure test</option><option value="mixed">Mixed-fault test</option><option value="mission">Flight-like mission</option></select></div><div class="button-row"><button id="toggleBtn" class="primary-btn">Ⅱ Pause simulation</button><button id="resetBtn" class="secondary-btn">↻ Reset</button></div><p class="control-note" id="controlNote">Values update every second. Fault modes are simulated, not real engine readings.</p></section>
+      </div>
+    </section>
+    <footer> AEROTWIN PROTOTYPE <span>•</span> Digital twin demonstration — not for real-flight decisions</footer>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
